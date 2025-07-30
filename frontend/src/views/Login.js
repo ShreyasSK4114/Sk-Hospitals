@@ -15,7 +15,7 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
-      // You can implement further login success logic here (e.g., save token, redirect)
+      // Further login success logic (e.g., save token, redirect) can be added here
     } catch (error) {
       setMessage(error.response?.data?.error || 'Login failed.');
     }
@@ -29,14 +29,14 @@ const Login = () => {
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={e => setUsername(e.target.value)}
           required
         /><br />
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           required
         /><br />
         <button type="submit">Login</button>

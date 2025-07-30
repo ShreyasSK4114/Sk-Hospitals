@@ -13,6 +13,10 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
+// CORS
+const cors = require('cors');
+app.use(cors());
+
 // routes for other
 const patientRoutes = require('./routes/patients');
 const doctorRoutes = require('./routes/doctors');
