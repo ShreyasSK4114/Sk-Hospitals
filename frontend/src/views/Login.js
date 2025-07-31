@@ -1,13 +1,15 @@
 // frontend/src/views/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+   const navigate = useNavigate(); 
 
-  const handleLogin = async (e) => {
+const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {
@@ -15,7 +17,10 @@ const Login = () => {
         password,
       });
       setMessage(response.data.message);
-      // Further login success logic (e.g., save token, redirect) can be added here
+      // Redirect if login is successful
+      if (response.data.message === 'Login successful!') {
+        navigate("/"); // or another route, e.g. "/dashboard"
+      }
     } catch (error) {
       setMessage(error.response?.data?.error || 'Login failed.');
     }

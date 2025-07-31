@@ -1,5 +1,3 @@
-// backend/routes/nurses.js
-
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
@@ -10,7 +8,6 @@ router.get('/', async (req, res) => {
     const [nurses] = await db.query('SELECT * FROM nurse_details');
     res.json(nurses);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: 'Server error fetching nurses' });
   }
 });
@@ -25,11 +22,34 @@ router.post('/', async (req, res) => {
     );
     res.json({ message: 'Nurse added successfully!' });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: 'Server error adding nurse' });
   }
 });
 
-// (You can add edit and delete routes here as needed)
+// Update nurse by name
+router.put('/:name', async (req, res) => {
+  const { name } = req.params;
+  const { age, address, contact, monthly_salary } = req.body;
+  try {
+    await db.query(
+      'UPDATE nurse_details SET age=?, address=?, contact=?, monthly_salary=? WHERE name=?',
+      [age, address, contact, monthly_salary, name]
+    );
+    res.json({ message: 'Nurse updated successfully!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error updating nurse' });
+  }
+});
+
+// Delete nurse by name
+router.delete('/:name', async (req, res) => {
+  const { name } = req.params;
+  try {
+    await db.query('DELETE FROM nurse_details WHERE name=?', [name]);
+    res.json({ message: 'Nurse deleted successfully!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error deleting nurse' });
+  }
+});
 
 module.exports = router;

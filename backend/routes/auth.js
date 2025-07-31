@@ -4,8 +4,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const bcrypt = require('bcrypt');
-
 const saltRounds = 10;
+
 
 // Register route
 router.post('/register', async (req, res) => {
@@ -31,6 +31,7 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error during registration.' });
+    console.log("error");
   }
 });
 
